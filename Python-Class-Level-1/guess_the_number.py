@@ -1,4 +1,4 @@
-# This is a Guess the Number game.
+# This is a Guess the Number game for level 1.
 import random
 
 guessesTaken = 0
