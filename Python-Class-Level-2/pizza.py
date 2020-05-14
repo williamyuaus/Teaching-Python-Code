@@ -3,7 +3,6 @@ import turtle
 BACKGROUND_COLOR = "#9EC388"
 CRUST_COLOR = "#ECA84F"
 SAUCE_COLOR = "#AD0509"
-PINEAPPLE_COLOR = "#FFEC89"
 CHEESE_COLOR = "#FBC70F"
 PEPPERONI_LOCATIONS = [
     [-70, 105],
@@ -40,19 +39,6 @@ def move_turtle(x, y):
     my_turtle.goto(x, y)
     my_turtle.down()
 
-def draw_rectangle(x, y, width, height):
-  turtle.up()
-  turtle.goto(x, y)
-  turtle.down()
-  turtle.forward(width)          
-  turtle.left(90)
-  turtle.forward(height)
-  turtle.left(90)
-  turtle.forward(width)
-  turtle.left(90)
-  turtle.forward(height)
-  turtle.left(90)
-
 draw_circle(150, CRUST_COLOR, CRUST_COLOR)
 move_turtle(0, 25)
 draw_circle(125, SAUCE_COLOR, CHEESE_COLOR)
@@ -60,7 +46,6 @@ draw_circle(125, SAUCE_COLOR, CHEESE_COLOR)
 for location in PEPPERONI_LOCATIONS:
     move_turtle(location[0], location[1])
     draw_circle(10, SAUCE_COLOR, SAUCE_COLOR)
-    # draw_rectangle(-70, 105, 10, 10)
 
 move_turtle(0, 150)
 my_turtle.color(BACKGROUND_COLOR)
@@ -72,4 +57,4 @@ for x in range(0, 8):
     my_turtle.penup()
     my_turtle.backward(150)
 
-turtle.done()
+my_turtle.hideturtle()
