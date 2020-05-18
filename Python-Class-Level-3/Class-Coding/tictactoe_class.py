@@ -74,8 +74,36 @@ def getComputerMove(board, computerLetter):
     else:
         playerLetter = 'X'
 
-    move = chooseRandomMoveFromList(board, [1, 2, 3, 4, 5, 6, 7, 8, 9])
-    return move
+    # Here is our algorithm for our computer's AI
+
+    # Check if the computer can win in the next move, take the move.
+    for i in range(1, 10):
+        boardCopy = getBoardCopy(board)
+        if isSpaceFree(boardCopy, i):
+            makeMove(boardCopy, computerLetter, i)
+            if isWinner(boardCopy, computerLetter):
+                return i
+
+    # Check if the player could win on his next move, and block them.
+    for i in range(1, 10):
+        boardCopy = getBoardCopy(board)
+        if isSpaceFree(boardCopy, i):
+            makeMove(boardCopy, playerLetter, i)
+            if isWinner(boardCopy, playerLetter):
+                return i
+            
+    # Try to take the centre, if it is free.
+    if isSpaceFree(board, 5):
+        return 5
+
+    # Try to take one of the corners, if they are free.
+    move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
+    if move != None:
+        return move
+
+    # Move on one of the sides.    
+    return chooseRandomMoveFromList(board, [2, 4, 6, 8])
+
 
 def isBoardFull(board):
     for i in range(1,  10):
