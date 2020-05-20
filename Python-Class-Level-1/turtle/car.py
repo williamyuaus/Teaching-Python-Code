@@ -36,3 +36,8 @@ t.begin_fill()
 t.down() 
 t.circle(10) 
 t.end_fill()
+t.hideturtle()
+
+
+
+
