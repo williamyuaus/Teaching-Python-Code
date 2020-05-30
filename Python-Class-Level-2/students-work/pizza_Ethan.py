@@ -1,4 +1,7 @@
 import turtle
+t = turtle.Pen()
+
+t.speed(100)
 
 BACKGROUND_COLOR = "#9EC388"
 CRUST_COLOR = "#F4D03F"
@@ -81,10 +84,13 @@ draw_circle(150, CRUST_COLOR, CRUST_COLOR)
 move_turtle(0, 25)
 
 draw_circle(125, SAUCE_COLOR, CHEESE_COLOR)
-  
-# move_turtle(location[0], location[1])
+    
 
-draw_circle(10, SAUCE_COLOR, POO_COLOR)
+for location in PEPPERONI_LOCATIONS:
+
+        move_turtle(location[0], location[1])
+
+        draw_circle(10, SAUCE_COLOR, POO_COLOR)
 
 for location in GUU_LOCATIONS:
 
@@ -110,54 +116,3 @@ for x in range(0, 8):
 
 
         
-
-# for location in PEPPERONI_LOCATIONS:
-
-#         move_turtle(location[0], location[1])
-
-#         draw_circle(10, SAUCE_COLOR, POO_COLOR)
-
-# for location in GUU_LOCATIONS:
-
-#         move_turtle(location[0], location[1])
-
-#         draw_circle(10, SAUCE_COLOR, GUU_COLOR)
-
-# move_turtle(0, 150)
-# my_turtle.color(BACKGROUND_COLOR)
-
-                    
-# for x in range(0, 8):
-#         my_turtle.pendown()
-
-#         my_turtle.left(45)
-
-#         my_turtle.forward(150)
-
-#         my_turtle.penup()
-
-#         my_turtle.backward(
-
-#         move_turtle(location[0], location[1])
-
-#         draw(10, SAUCE_COLOR, POO_COLOR)
-
-# # for location in GUU_LOCATIONS:
-# #     move_turtle(location[0], location[1])
-
-# #     draw_circle(10, SAUCE_COLOR, GUU_COLOR)
-
-# # move_turtle(0, 150)
-# # my_turtle.color(BACKGROUND_COLOR)
-
-                    
-# # for x in range(0, 8):
-# #         my_turtle.pendown()
-
-# #         my_turtle.left(45)
-
-# #         my_turtle.forward(150)
-
-# #         my_turtle.penup()
-
-# #         my_turtle.backward(150)
