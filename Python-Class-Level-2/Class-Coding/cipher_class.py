@@ -47,5 +47,3 @@ message = getMessage()
 key = getKey()
 print('Your translated text is:')
 print(getTranslatedMessage(mode, message, key))
-
-# Weibo's encrypt message: kiRdj ViR lfp ,jZYk Vmcfj eRT lfp Wz
