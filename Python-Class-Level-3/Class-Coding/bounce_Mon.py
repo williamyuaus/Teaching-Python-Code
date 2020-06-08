@@ -41,7 +41,7 @@ class Ball:
     def hit_paddle(self, pos):
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
-            if pos[3] >= paddle_pos[1]:
+            if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]:
                 return True
         return False
 
@@ -52,14 +52,19 @@ class Paddle:
         self.canvas.move(self.id, 200, 300)
         self.x = 0
         self.canvas_width = self.canvas.winfo_width()
+        self.started = False
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
+        self.canvas.bind_all('<space>', self.start_game)
         
     def turn_left(self, evt):
         self.x = -2
         
     def turn_right(self, evt):
         self.x = 2
+
+    def start_game(self, evt):
+        self.started = True
         
     def draw(self):
         self.canvas.move(self.id, self.x, 0)
@@ -71,11 +76,15 @@ class Paddle:
      
 paddle = Paddle(canvas, 'blue')
 ball = Ball(canvas, paddle, 'red')
+game_over_text = canvas.create_text(250, 200, text='GAME OVER', state='hidden')
 
 while 1:
-    if ball.hit_bottom == False:
+    if ball.hit_bottom == False and paddle.started == True:
         ball.draw()
         paddle.draw()
+    if ball.hit_bottom == True:
+        time.sleep(1)
+        canvas.itemconfig(game_over_text, state='normal')
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)
