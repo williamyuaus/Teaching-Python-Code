@@ -16,7 +16,7 @@ class Ball:
         self.paddle = paddle
         self.score = score
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color)
-        self.canvas.move(self.id, 245, 100)
+        self.canvas.move(self.id, 235, 275)
         starts = [-3, -2, -1, 1, 2, 3]
         random.shuffle(starts)
         self.x = starts[0]
@@ -87,10 +87,17 @@ class Score:
         self.score += 1
         self.canvas.itemconfig(self.id, text=self.score)
 
+class Block:
+    def __init__(self, canvas, color):
+        self.canvas = canvas
+        self.id = canvas.create_rectangle(0, 0, 100, 10, fill=color)
+        self.canvas.move(self.id, 200, 300)
+
 score = Score(canvas, 'green')
 paddle = Paddle(canvas, 'blue')
 ball = Ball(canvas, paddle, score, 'red')
 game_over_text = canvas.create_text(250, 200, text='GAME OVER', state='hidden')
+
 
 while 1:
     if ball.hit_bottom == False and paddle.started == True:
