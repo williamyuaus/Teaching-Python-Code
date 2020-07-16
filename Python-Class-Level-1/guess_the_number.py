@@ -16,15 +16,15 @@ for guessesTaken in range(6):
 
     if guess < number:
         
-        if guess > (number -5):
-            print ('a little lower')
-        else: 
+        # if guess > (number -5):
+        #     print ('a little lower')
+        # else: 
             print('Your guess is too low.') # Eight spaces in front of "print"
 
     if guess > number:
-        if guess < (number + 5) :
-            print ('a little higher')
-        else:
+        # if guess < (number + 5) :
+        #     print ('a little higher')
+        # else:
             print('Your guess is too high.')
 
     if guess == number:
