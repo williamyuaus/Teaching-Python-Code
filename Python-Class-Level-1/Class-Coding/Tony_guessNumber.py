@@ -5,19 +5,25 @@ guessesTaken = 0
 print('Hello! What is your name?')
 myName = input()
 
-number = random.randint(1, 20)
-print('Well, ' + myName + ', I am thinking of a number between 1 and 20.')
+number = random.randint(1, 50)
+print('Well, ' + myName + ', I am thinking of a number between 1 and 50.')
 
-for guessesTaken in range(6):
+for guessesTaken in range(8):
     print('Take a guess.')
     guess = input()
     guess = int(guess)
 
     if (guess < number):
-        print('lower')
+        if guess > (number - 5):
+            print('A little lower')
+        else:
+            print('Too low')
 
     if (guess > number):
-        print('higher')
+        if guess < (number + 5):
+            print('A little higher')
+        else:
+            print('Too high')
 
     if (guess == number):
         break
