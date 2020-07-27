@@ -11,9 +11,10 @@ canvas.pack()
 tk.update()
 
 class Ball:
-    def __init__(self, canvas, paddle, color):
+    def __init__(self, canvas, paddle, score, color):
         self.canvas = canvas
         self.paddle = paddle
+        self.score = score
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color)
         self.canvas.move(self.id, 245, 100)
         starts = [-3, -2, -1, 1, 2, 3]
@@ -42,6 +43,8 @@ class Ball:
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
             if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]:
+                self.x += self.paddle.x
+                self.score.hit()
                 return True
         return False
 
@@ -74,9 +77,19 @@ class Paddle:
         elif pos[2] >= self.canvas_width:
             self.x = 0
 
+class Score:
+    def __init__(self, canvas, color):
+        self.score = 0
+        self.canvas = canvas
+        self.id = canvas.create_text(450, 10, text=self.score, fill=color)
+
+    def hit(self):
+        self.score += 1
+        self.canvas.itemconfig(self.id, text=self.score)
         
+score = Score(canvas, 'green')       
 paddle = Paddle(canvas, 'blue')
-ball = Ball(canvas, paddle, 'red')
+ball = Ball(canvas, paddle, score, 'red')
 game_over_text = canvas.create_text(250, 200, text='GAME OVER', state='hidden')
 
 
