@@ -87,8 +87,8 @@ def enterPlayerMove(previousMoves):
             return [int(move[0]), int(move[1])]
         
 
-def showInstructions():
-    print('''Instructions:
+    def showInstructions():
+        print('''Instructions:
 You are the captain of the Simon, a treasure-hunting ship. Your current mission
 is to use sonar devices to find three sunken treasure chests at the bottom of
 the ocean. But you only have cheap sonar that finds distance, not direction.
@@ -152,5 +152,39 @@ while True:
 
     while sonarDevices > 0:
         print('You have %s sonar device(s) left. %s treasure chest(s) remaining.' % (sonarDevices, len(theChests)))
+
+        x, y = enterPlayerMove(previousMoves)
+        previousMoves.append([x, y])
+
+        moveResult = makeMove(theBoard, theChests, x, y)
+        if moveResult == False:
+            contine
+        else:
+            if moveResult == 'You have found a sunken treasure chest!':
+                for x, y in previousMoves:
+                    makeMove(theBoard, theChests, x, y)
+            drawBoard(theBoard)
+            print(moveResult)
+
+        if len(theChests) == 0:
+            print('You have found all the sunken treasure chests! Congratulations and good game!')
+            break
+
+        sonarDevices -= 1
+
+    if sonarDevies == 0:
+        print('We\'ve run out of sonar devices! Now we have to turn the ship around and head')
+        print('for home with treasure chests still out there! Game over.')
+        print(' The remaining chests were here:')
+        for x, y in theChests:
+            print(' %s, %s' % (x, y))
+        
+    print('Do you want to play again? (yes or no)')
+    if not input().lower().startswith('y'):
+        sys.exit()
+
+
+
+
 
 
