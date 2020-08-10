@@ -17,8 +17,8 @@ def draw_star(points, size, col, x, y):
 while True:
     ranCol = (random(), random(), random())
     ranPts = randint(2, 5) * 2 + 1
-    ranSize = ?
-    ranX = ?
-    ranY = ?
+    ranSize = randint(2,5) * 10
+    ranX = randint(1, 100)
+    ranY = randint(2, 90)
 
     draw_star(ranPts, ranSize, ranCol, ranX, ranY)
