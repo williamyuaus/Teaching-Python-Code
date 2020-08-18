@@ -34,6 +34,16 @@ HANGMAN_PICS = ['''
   O   |
  /|\  |
  / \  |
+     ===''', '''
+  +---+
+ [O   |
+ /|\  |
+ / \  |
+     ===''', '''
+  +---+
+ [O]  |
+ /|\  |
+ / \  |
      ===''']
 
 words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog'.split()
@@ -50,7 +60,7 @@ def displayBoard(missedLetters, correctLetters, secretWord):
         print(letter, end=' ')
     print()
 
-    blanks = '_' * len(secertWord)
+    blanks = '_' * len(secretWord)
 
     for i in range(len(secretWord)):
         if secretWord[i] in correctLetters:
@@ -79,6 +89,20 @@ def playAgain():
     return input().lower().startswith('y')
           
 print('H A N G M A N')
+difficulty = ' '
+while difficulty not in 'EMH':
+    print('Enter difficulty: E - Easy, M - Medium, H - Hard')
+    difficulty = input().upper()
+if difficulty == 'M':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+if difficulty == 'H':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+    del HANGMAN_PICS[5]
+    del HANGMAN_PICS[3]
+    
+
 missedLetters = ''
 correctLetters = ''
 secretWord = getRandomWord(words)
@@ -93,7 +117,7 @@ while True:
         correctLetters = correctLetters + guess
 
         foundAllLetters = True
-        for i in range(len(secrectWord)):
+        for i in range(len(secretWord)):
             if secretWord[i] not in correctLetters:
                 foundAllLetters = False
                 break
@@ -102,7 +126,20 @@ while True:
             gameIsDone = True
     else:
         missedLetters = missedLetters + guess
-        if ???
+        if len(missedLetters) == len(HANGMAN_PICS) - 1:
+            displayBoard(missedLetters, correctLetters, secretWord)
+            print('You have run out of guesses!')
+            gameIsDone = True
+            
+    if gameIsDone:
+        if playAgain():
+            missedLetters = ''
+            correctLetters = ''
+            gameIsDone = False
+            secretWord = getRandomWord(words)
+        else:
+            break
+            
 
 
 
