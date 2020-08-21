@@ -16,7 +16,9 @@ def draw_star(points, size, col, x, y):
     turtle.end_fill()
 
 while True:
+    ranPts = randint(2, 5) * 2 + 1
+    ranSize = randint(10, 50)
     ranX = randint(-350, 300)
     ranY = randint(-250, 250)
-    ranCol = (1, 0, 0)
-    draw_star(5, 100, ranCol, ranX, ranY)
+    ranCol = (random(), random(), random())
+    draw_star(ranPts, ranSize, ranCol, ranX, ranY)

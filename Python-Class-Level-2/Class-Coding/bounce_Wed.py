@@ -6,14 +6,15 @@ tk = Tk()
 tk.title("Game")
 tk.resizable(0, 0)
 tk.wm_attributes("-topmost", 1)
-canvas = Canvas(tk, width=500, height=400, bd=0, highlightthickness=0)
+canvas = Canvas(tk, bg="yellow", width=500, height=400, bd=0, highlightthickness=0)
 canvas.pack()
 tk.update()
 
 class Ball:
-    def __init__(self, canvas, paddle, color):
+    def __init__(self, canvas, paddle, score, color):
         self.canvas = canvas
         self.paddle = paddle
+        self.score = score
         self.id = canvas.create_oval(10, 10, 25, 25, fill=color)
         self.canvas.move(self.id, 245, 100)
         starts = [-3, -2, -1, 1, 2, 3]
@@ -42,6 +43,8 @@ class Ball:
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
             if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]:
+                self.x += self.paddle.x
+                self.score.hit()
                 return True
         return False
 
@@ -74,14 +77,28 @@ class Paddle:
         if pos[2] >= self.canvas_width:
             self.x = 0        
 
-paddle = Paddle(canvas, 'blue')
-ball = Ball(canvas, paddle, 'red')
+class Score:
+    def __init__(self, canvas, color):
+        self.score = 0
+        self.canvas = canvas
+        self.id = canvas.create_text(450, 10, text=self.score, fill=color)
 
+    def hit(self):
+        self.score += 1
+        self.canvas.itemconfig(self.id, text=self.score)
+        
+score = Score(canvas, 'green')
+paddle = Paddle(canvas, 'blue')
+ball = Ball(canvas, paddle, score, 'red')
+game_over_text = canvas.create_text(250, 200, text='GAME OVER', state='hidden')
 
 while True:
     if paddle.started == True and ball.hit_bottom == False:
         ball.draw()
         paddle.draw()
+    if ball.hit_bottom == True:
+        time.sleep(1)
+        canvas.itemconfig(game_over_text, state='normal')
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)

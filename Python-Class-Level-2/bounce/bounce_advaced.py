@@ -6,7 +6,7 @@ tk = Tk()
 tk.title("Game")
 tk.resizable(0, 0)
 tk.wm_attributes("-topmost", 1)
-canvas = Canvas(tk, width=500, height=400, bd=0, highlightthickness=0)
+canvas = Canvas(tk, bg="yellow", width=500, height=400, bd=0, highlightthickness=0)
 canvas.pack()
 tk.update()
 
@@ -58,7 +58,7 @@ class Paddle:
         self.started = False
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
-        self.canvas.bind_all('<Button-1>', self.start_game)
+        self.canvas.bind_all('<space>', self.start_game)
         
     def turn_left(self, evt):
         self.x = -2

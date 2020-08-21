@@ -70,7 +70,32 @@ def getComputerMove(board, computerLetter):
     else:
         playerLetter = 'X'
 
-    return chooseRandomMoveFromList(board, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+    for i in range(1, 10):
+        boardCopy = getBoardCopy(board)
+        if isSpaceFree(boardCopy, i):
+            makeMove(boardCopy, computerLetter, i)
+            if isWinner(boardCopy, computerLetter):
+                return i
+
+    for i in range(1, 10):
+        boardCopy = getBoardCopy(board)
+        if isSpaceFree(boardCopy, i):
+            makeMove(boardCopy, playerLetter, i)
+            if isWinner(boardCopy, playerLetter):
+                return i
+
+    if isSpaceFree(board, 5):
+        return 5
+
+    move = chooseRandomMoveFromList(board, [2, 4, 6, 8])
+    if move != None:
+        return move
+    
+    move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
+    if move != None:
+        return move
+
+
 
 def isBoardFull(board):
     for i in range(1, 10):
