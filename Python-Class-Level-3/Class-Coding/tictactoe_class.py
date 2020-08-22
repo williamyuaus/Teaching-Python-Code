@@ -157,6 +157,3 @@ while True:
     print('Do you want to play again? (yes or no)')
     if not input().lower().startswith('y'):
         break
-
-
-
