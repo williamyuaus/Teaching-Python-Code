@@ -1,7 +1,7 @@
 import turtle
 t = turtle.Pen()
 
-t.color(1,0,0) 
+t.color("red") 
 t.begin_fill() 
 t.forward(100) 
 t.left(90) 

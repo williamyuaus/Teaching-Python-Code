@@ -9,7 +9,7 @@ while True:
     while True:
         print('Enter your move: (r)ock (p)aper (s)cissors or (q)uit')
         playerMove = input().lower()
-        if playerMove == 'q':
+        if playerMove == 'q'or losses == 5:
             sys.exit()
         if playerMove == 'r' or playerMove == 'p' or playerMove == 's':
             break
@@ -33,18 +33,28 @@ while True:
         computerMove = 's'
         print('SCISSORS')
 
+    # Display and record the win/loss/tie:
     if playerMove == computerMove:
         print('It is a tie!')
         ties = ties + 1
     elif playerMove == 'r' and computerMove == 's':
         print('You win!')
         wins = wins + 1
+    elif playerMove == 'p' and computerMove == 'r':
+        print('You win!')
+        wins = wins + 1
+    elif playerMove == 's' and computerMove == 'p':
+        print('You win!')
+        ins = wins + 1
+    elif playerMove == 'r' and computerMove == 'p':
+        print('You lose!')
+        losses = losses + 1
+    elif playerMove == 'p' and computerMove == 's':
+        print('You lose!')
+        losses = losses + 1
+    elif playerMove == 's' and computerMove == 'r':
+        print('You lose!')
+        losses = losses + 1
         
 
     
-
-
-
-    
-
-        

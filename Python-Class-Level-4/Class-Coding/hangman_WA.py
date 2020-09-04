@@ -143,6 +143,7 @@ while True:
             correctLetters = ''
             gameIsDone = False
             secretWord = getRandomWord(words)
+            secretWord, secretSet = getRandomWord(words)
         else:
             break
             
