@@ -23,21 +23,21 @@ screen = turtle.Screen()
 screen.bgcolor(BACKGROUND_COLOR)
 screen.title("My Pizza")
 
-my_turtle = turtle.Turtle()
-my_turtle.pensize(5)
-my_turtle.shape("circle")
+t = turtle.Turtle()
+t.pensize(5)
+t.shape("circle")
 
 def draw_circle(radius, line_color, fill_color):
-    my_turtle.color(line_color)
-    my_turtle.fillcolor(fill_color)
-    my_turtle.begin_fill()
-    my_turtle.circle(radius)
-    my_turtle.end_fill()
+    t.color(line_color)
+    t.fillcolor(fill_color)
+    t.begin_fill()
+    t.circle(radius)
+    t.end_fill()
 
 def move_turtle(x, y):
-    my_turtle.up()
-    my_turtle.goto(x, y)
-    my_turtle.down()
+    t.up()
+    t.goto(x, y)
+    t.down()
 
 draw_circle(150, CRUST_COLOR, CRUST_COLOR)
 move_turtle(0, 25)
@@ -48,13 +48,13 @@ for location in PEPPERONI_LOCATIONS:
     draw_circle(10, SAUCE_COLOR, SAUCE_COLOR)
 
 move_turtle(0, 150)
-my_turtle.color(BACKGROUND_COLOR)
+t.color(BACKGROUND_COLOR)
 
 for x in range(0, 8):
-    my_turtle.pendown()
-    my_turtle.left(45)
-    my_turtle.forward(150)
-    my_turtle.penup()
-    my_turtle.backward(150)
+    t.pendown()
+    t.left(45)
+    t.forward(150)
+    t.penup()
+    t.backward(150)
 
-my_turtle.hideturtle()
+t.hideturtle()

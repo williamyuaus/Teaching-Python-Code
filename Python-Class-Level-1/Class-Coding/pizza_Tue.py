@@ -34,5 +34,25 @@ def draw_circle(radius, line_color, fill_color):
     t.circle(radius)
     t.end_fill()
 
+def move_turtle(x, y):
+    t.up()
+    t.goto(x, y)
+    t.down()
+
 draw_circle(150, CRUST_COLOR, CRUST_COLOR)
+move_turtle(0, 25)
 draw_circle(125, SAUCE_COLOR, CHEESE_COLOR)
+
+for location in PEPPERONI_LOCATIONS:
+    move_turtle(location[0], location[1])
+    draw_circle(10, SAUCE_COLOR, SAUCE_COLOR)
+
+move_turtle(0, 150)
+t.color(BACKGROUND_COLOR)
+
+for x in range(0, 8):
+    t.pendown()
+    t.left(45)
+    t.forward(150)
+    t.penup()
+    t.backward(150)
