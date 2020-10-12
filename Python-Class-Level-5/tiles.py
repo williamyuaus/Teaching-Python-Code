@@ -19,6 +19,8 @@ neighbors = [
     vector(-100, 0),
     vector(0, 100),
     vector(0, -100),
+    # vector(100, -100),
+    # vector(-100, -100),
 ]
 
 def load():
@@ -49,6 +51,7 @@ def square(mark, number):
     goto(mark.x, mark.y)
     down()
 
+    pensize(5)
     color('black', 'white')
     begin_fill()
     for count in range(4):
@@ -68,6 +71,7 @@ def tap(x, y):
     x = floor(x, 100)
     y = floor(y, 100)
     mark = vector(x, y)
+    
 
     for neighbor in neighbors:
         spot = mark + neighbor
@@ -78,14 +82,22 @@ def tap(x, y):
             square(spot, number)
             tiles[mark] = None
             square(mark, None)
+           
+
+
 
 def draw():
     "Draw all tiles."
     for mark in tiles:
         square(mark, tiles[mark])
+    up()
+    goto(0, 205)
+    down()
+    write('score: ' + str(score))
     update()
 
-setup(420, 420, 250, 250)
+
+setup(500, 500, 250, 250)
 hideturtle()
 tracer(False)
 load()

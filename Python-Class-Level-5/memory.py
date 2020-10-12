@@ -24,7 +24,7 @@ def square(x, y):
     up()
     goto(x, y)
     down()
-    color('black', 'orange')
+    color('black', 'white')
     begin_fill()
     for count in range(4):
         forward(50)

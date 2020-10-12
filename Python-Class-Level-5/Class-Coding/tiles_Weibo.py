@@ -25,6 +25,12 @@ def load():
         neighbor = choice(neighbors)
         spot = mark + neighbor
 
+        if spot in tiles:
+            number = tiles[spot]
+            tiles[spot] = None
+            tiles[mark] = number
+            mark = spot
+
     
 
 def square(mark, number):
@@ -46,6 +52,21 @@ def square(mark, number):
 
     write(number, font=('Arial', 60, 'normal'))
     
+def tap(x, y):
+    x = floor(x, 100)
+    y = floor(y, 100)
+    mark = vector(x, y)
+
+    for neighbor in neighbors:
+        spot = mark + neighbor
+
+        if spot in tiles and tiles[spot] is None:
+            number = tiles[mark]
+            tiles[spot] = number
+            square(spot, number)
+            tiles[mark] = None
+            square(mark, None)
+    
 
 def draw():
     for mark in tiles:
@@ -57,4 +78,5 @@ hideturtle()
 tracer(False)
 load()
 draw()
+onscreenclick(tap)
 done()

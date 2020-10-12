@@ -13,8 +13,25 @@ def getNewBoard():
                 board[x].append('`')
     return board
 
+def drawBoard(board):
+    tensDigitsLine = '    '
+    for i in range(1, 6):
+        tensDigitsLine += (' ' * 9) + str(i)
 
-    
+    print(tensDigitsLine)
+    print('   ' + ('0123456789' * 6))
+    print()
+
+    for row in range(15):
+        # Single-digit numbers need to be padded with an extra space.
+        if row < 10:
+            extraSpace = ' '
+        else:
+            extraSpace = ''
+
+
+
+        print('%s%s %s' % (extraSpace, row, row))
 
 
 def showInstructions():
@@ -67,5 +84,14 @@ sonar devices. Good luck!
 Press enter to continue...''')
     input()
 
+theBoard = getNewBoard()
+drawBoard(theBoard)
 
- 
+
+
+
+
+
+
+
+
