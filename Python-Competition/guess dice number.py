@@ -17,6 +17,52 @@ from random import randint
 
 from time import sleep
 
+DICE_FACES = ['''
+  +---+
+      |
+      |
+      |
+     ===''', '''
+  +---+
+  O   |
+      |
+      |
+     ===''', '''
+  +---+
+  O   |
+  |   |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|   |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+ /    |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+ / \  |
+     ===''', '''
+  +---+
+ [O   |
+ /|\  |
+ / \  |
+     ===''', '''
+  +---+
+ [O]  |
+ /|\  |
+ / \  |
+     ===''']
 
 def get_user_guess():
   guess = int(input("Guess a number!"))
@@ -34,6 +80,8 @@ def roll_dice(sides):
       print("Rolling...")
       sleep(2)
       print("The 1st roll is: {}".format(first_roll))
+      print(DICE_FACES[first_roll - 1])
+      # print(HAng)
       print("The 2nd roll is: {}".format(second_roll))
       total_roll = first_roll + second_roll
       print("Result...")

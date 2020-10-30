@@ -58,6 +58,8 @@ def draw():
     shape(car)
     stamp()
 
+    pensize(8)
+
     for count in range(64):
         if hide[count]:
             x, y = xy(count)
@@ -70,6 +72,9 @@ def draw():
         up()
         goto(x + 2, y)
         color('black')
+        if(tiles[mark] < 10):
+            forward(12)
+
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
     update()

@@ -46,34 +46,35 @@ def move():
     "Update object positions."
     bird.y -= 5
 
-    for ball in balls:
-        ball.x -= 3
+    # for ball in balls:
+    #     ball.x -= 3
 
-    if randrange(10) == 0:
-        y = randrange(-199, 199)
-        ball = vector(199, y)
-        balls.append(ball)
+    # if randrange(10) == 0:
+    #     y = randrange(-199, 199)
+    #     ball = vector(199, y)
+    #     balls.append(ball)
 
-    while len(balls) > 0 and not inside(balls[0]):
-        balls.pop(0)
+    # while len(balls) > 0 and not inside(balls[0]):
+    #     balls.pop(0)
 
-    if not inside(bird):
-        draw(False)
-        return
+    # if not inside(bird):
+    #     draw(False)
+    #     return
 
-    for ball in balls:
-        if abs(ball - bird) < 15:
-            print(abs(ball - bird))
-            draw(False)
-            return
+    # for ball in balls:
+    #     if abs(ball - bird) < 15:
+    #         print(abs(ball - bird))
+    #         draw(False)
+    #         return
 
     draw(True)
     ontimer(move, 50)
 
 setup(420, 420, 370, 0)
+#bgcolor('purple')
 hideturtle()
 up()
 tracer(False)
-onscreenclick(tap)
+# onscreenclick(tap)
 move()
 done()
