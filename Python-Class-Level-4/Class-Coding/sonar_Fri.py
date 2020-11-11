@@ -83,10 +83,9 @@ def enterPlayerMove(previousMoves):
             if [int(move[0]), int(move[1])] in previsousMoves:
                 print('You already moved there.')
                 continue
+            return [int(move[0]), int(move[1])]
 
-        
-
-    
+        print('Enter a number from 0 to 59, a space, then a number from 0 to 14.')
 
 def showInstructions():
     print('''Instructions:
@@ -138,8 +137,33 @@ sonar devices. Good luck!
 Press enter to continue...''')
     input()
 
-theBoard = getNewBoard()
-drawBoard(theBoard)
+print('SONAR!')
+print()
+print('Would you like to view the instructions? (yes/no)')
+if input().lower().startswith('y'):
+    showInstructions()
+
+while True:
+    sonarDevices = 20
+    theBoard = getNewBoard()
+    theChests = getRandomChests(3)
+    drawBoard(theBoard)
+    previousMoves = []
+
+    while sonarDevices > 0:
+        print('You have %s sonar device(s) left. %s  treasure chest(s) remaning' % (sonarDevices, len(theChests)))
+
+        x, y = enterPlayerMove(previousMoves)
+        previousMoves.append([x, y])
+
+        moveResult = makeMove(theBoard, theChests, x, y)
+
+        if moveResult == False:
+            continue
+        else:
+            if moveResult == 'You have found a sunken treasure chest!':
+                
+
 
 
 
