@@ -13,7 +13,6 @@ ghosts = [
     [vector(100, 160), vector(0, -5)],
     [vector(100, -160), vector(-5, 0)],
 ]
-
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
@@ -38,6 +37,7 @@ tiles = [
 ]
 
 def square(x, y):
+    "Draw square using path at (x, y)."
     path.up()
     path.goto(x, y)
     path.down()
@@ -50,12 +50,14 @@ def square(x, y):
     path.end_fill()
 
 def offset(point):
+    "Return offset of point in tiles."
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
     index = int(x + y * 20)
     return index
 
 def valid(point):
+    "Return True if point is valid in tiles."
     index = offset(point)
 
     if tiles[index] == 0:
@@ -69,6 +71,7 @@ def valid(point):
     return point.x % 20 == 0 or point.y % 20 == 0
 
 def world():
+    "Draw world using path."
     bgcolor('black')
     path.color('blue')
 
@@ -86,12 +89,24 @@ def world():
                 path.dot(2, 'white')
 
 def move():
+    "Move pacman and all ghosts."
+    writer.undo()
+    writer.write(score)
 
     clear()
 
     if valid(pacman + aim):
         pacman.move(aim)
-    
+
+    index = offset(pacman)
+
+    if tiles[index] == 1:
+        tiles[index] = 2
+        state['score'] += 1
+        x = (index % 20) * 20 - 200
+        y = 180 - (index // 20) * 20
+        square(x, y)
+
     up()
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
@@ -105,15 +120,15 @@ def move():
                 vector(-5, 0),
                 vector(0, 5),
                 vector(0, -5),
-                ]
+            ]
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
-            
+
         up()
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
-    
+
     update()
 
     for point, course in ghosts:
@@ -123,6 +138,7 @@ def move():
     ontimer(move, 100)
 
 def change(x, y):
+    "Change pacman aim if valid."
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
@@ -132,6 +148,10 @@ hideturtle()
 tracer(False)
 writer.goto(160, 160)
 writer.color('white')
+score = 0
+for tile in tiles:
+    score = score + tile
+    
 writer.write(state['score'])
 listen()
 onkey(lambda: change(5, 0), 'Right')
@@ -141,10 +161,3 @@ onkey(lambda: change(0, -5), 'Down')
 world()
 move()
 done()
-
-            
-
-        
-
-
-        

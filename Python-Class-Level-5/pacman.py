@@ -10,7 +10,7 @@ Exercises
 
 """
 
-from random import choice
+from random import choice, randint
 from turtle import *
 from base import floor, vector
 
@@ -104,6 +104,7 @@ def move():
     "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
+    # writer.write(score)
 
     clear()
 
@@ -123,8 +124,9 @@ def move():
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
 
+
     for point, course in ghosts:
-        if valid(point + course):
+        if  valid(point + course):
             point.move(course)
         else:
             options = [
@@ -136,6 +138,7 @@ def move():
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
+            change = 0
 
         up()
         goto(point.x + 10, point.y + 10)
@@ -146,6 +149,10 @@ def move():
     for point, course in ghosts:
         if abs(pacman - point) < 20:
             return
+    
+    # if state['score'] == 10:
+    #     writer.write('You Win!')
+    #     return
 
     ontimer(move, 100)
 
@@ -158,6 +165,9 @@ def change(x, y):
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
+score = 0
+for tile in tiles:
+    score += tile
 writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])

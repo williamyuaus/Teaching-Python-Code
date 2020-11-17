@@ -80,7 +80,7 @@ def enterPlayerMove(previousMoves):
 
         move = move.split()
         if len(move) == 2 and move[0].isdigit() and move[1].isdigit() and isOnBoard(int(move[0]), int(move[1])):
-            if [int(move[0]), int(move[1])] in previsousMoves:
+            if [int(move[0]), int(move[1])] in previousMoves:
                 print('You already moved there.')
                 continue
             return [int(move[0]), int(move[1])]
@@ -162,7 +162,29 @@ while True:
             continue
         else:
             if moveResult == 'You have found a sunken treasure chest!':
-                
+                for x, y in previousMoves:
+                    makeMove(theBoard, theChests, x, y)
+            drawBoard(theBoard)
+            print(moveResult)
+
+            if len(theChests) == 0:
+                print('You have found all the sunken treasure chests! Congratulations and good game!')
+                break
+
+        sonarDevices -= 1
+
+    if sonarDevices == 0:
+        print('We\'ve run out of sonar devices! Now we have to turn the ship around and head')
+        print('for home with treasure chests still out there! Game over.')
+        print(' The remaining chests were here:')
+        for x, y in theChests:
+            print(' %s, %s' % (x, y))
+
+    print('Do you want to play again? (Yes or no)')
+    if not input().lower.startswith('y'):
+        sys.exit()
+
+        
 
 
 
