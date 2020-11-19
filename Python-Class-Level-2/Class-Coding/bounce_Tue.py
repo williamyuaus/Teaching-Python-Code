@@ -38,6 +38,12 @@ class Ball:
         if pos[2] >= self.canvas_width:
             self.x = -1
 
+    def hit_paddle(self, pos):
+        paddle_pos = self.canvas.coords(self.paddle.id)
+        if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
+            if pos[3] >= paddle_pos[1]:
+                return True
+        return False
    
 
 class Paddle:
@@ -66,7 +72,7 @@ class Paddle:
         
 
 paddle = Paddle(canvas, 'blue')
-ball = Ball(canvas, 'red')
+ball = Ball(canvas, paddle, 'red')
 
 
 while True:
