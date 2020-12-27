@@ -150,9 +150,14 @@ def move():
         if abs(pacman - point) < 20:
             return
     
-    # if state['score'] == 10:
-    #     writer.write('You Win!')
-    #     return
+    if state['score'] == 20:
+        writer.undo()
+        writer.up()
+        writer.goto(-140, 0)
+        writer.down()
+        writer.color('red')
+        writer.write('You Win!', font=("Arial", 64, 'bold'))
+        return
 
     ontimer(move, 100)
 

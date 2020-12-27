@@ -152,6 +152,7 @@ score = 0
 for tile in tiles:
     score = score + tile
     
+    
 writer.write(state['score'])
 listen()
 onkey(lambda: change(5, 0), 'Right')
