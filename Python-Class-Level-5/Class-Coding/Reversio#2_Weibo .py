@@ -171,7 +171,29 @@ def getWorstMove(board, tile):
         if score < worstScore:
             worstMove = [x, y]
             worstScore = score
-    return worstScore
+    return worstMove
+
+def getRandomMove(board, tile):
+    possibleMoves = getValidMoves(board, tile)
+    return random.choice(possibleMoves)
+    
+def isOnSide(x, y):
+    return x == 0 or x == WIDTH - 1 or y == 0 or y == HEIGHT - 1
+
+def getCornerSideBestMove(board, tile):
+    possibleMoves = getValidMoves(board, computerTile)
+    random.shuffle(possibleMoves)
+
+    for x, y in possibleMoves:
+        if isOnCorner(x, y):
+            return [x, y]
+        
+    for x, y in possibleMoves:
+        if isOnSide(x, y):
+            return [x, y]
+
+    return getCornerBestMove(board, tile)
+
     
 
 def printScore(board, playerTile, computerTile):
@@ -205,7 +227,7 @@ def playGame(playerTile, computerTile):
                     #drawBoard(board)
                 #printScore(board, playerTile, computerTile)
 
-                move = getComputerMove(board, playerTile)
+                move = getCornerBestMove(board, playerTile)
                 #if move == 'quit':
                     #print("Thanks for playing!")
                     #sys.exit()
@@ -223,7 +245,7 @@ def playGame(playerTile, computerTile):
                 #printScore(board, playerTile, computerTile)
 
                 #input("Press Enter to see the computer's move.")
-                move = getComputerMove(board, computerTile)
+                move = getWorstMove(board, computerTile)
                 makeMove(board, computerTile, move[0], move[1])
             turn = 'player'
             
