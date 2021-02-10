@@ -15,4 +15,3 @@ def getMessage():
     return input()
 
 def getKey():
-    
