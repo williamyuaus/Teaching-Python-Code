@@ -34,7 +34,12 @@ def getTranslatedMessage(mode, message, key):
         else:
             symbolIndex += key
 
+            if symbolIndex >= len(SYMBOLS):
+                symbolIndex -= len(SYMBOLS)
+            elif 
+
             translated += SYMBOLS[symbolIndex]
+    return translated
 
 
 
