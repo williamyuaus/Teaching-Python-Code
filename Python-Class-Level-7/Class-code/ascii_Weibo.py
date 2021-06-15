@@ -74,4 +74,22 @@ def main():
     if args.outFile:
         outFile = args.outFile
 
-    
+    scale = 0.43
+    if args.scale:
+        scale = float(args.scale)
+
+    cols = 80
+    if args.cols:
+        cols = int(args.cols)
+
+    print('generating ASCII art...')
+    aimg = convertImageToAscii(imageFile, cols, scale, args.moreLevels)
+
+    f = open(outFile, 'w')
+    for row in aimg:
+        f.write(row + '\n')
+    f.close
+    print("ASCII art written to %s" % outFile)
+
+if __name__ == '__main__':
+    main()    
