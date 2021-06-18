@@ -1,0 +1,9 @@
+import os
+
+SCREENSIZE = (600, 150)
+
+FPS = 60
+
+BACKGROUND_COLOR = (0, 0, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)

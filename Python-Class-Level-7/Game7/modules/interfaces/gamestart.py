@@ -7,8 +7,9 @@ Author:
     Charles的皮卡丘
 '''
 import sys
+import random
 import pygame
-from ..sprites import Dinosaur
+
 
 
 '''游戏开始界面'''
@@ -20,19 +21,4 @@ def GameStartInterface(screen, sounds, cfg):
     clock = pygame.time.Clock()
     press_flag = False
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
-                    press_flag = True
-                    dino.jump(sounds)
-        dino.update()
-        screen.fill(cfg.BACKGROUND_COLOR)
-        screen.blit(ground, rect)
-        dino.draw(screen)
         pygame.display.update()
-        clock.tick(cfg.FPS)
-        if (not dino.is_jumping) and press_flag:
-            return True
