@@ -1,3 +1,3 @@
 import pygame, sys, random
-from pygame.locals import *
+# from pygame.locals import *
 
