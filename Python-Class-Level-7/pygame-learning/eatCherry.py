@@ -39,6 +39,7 @@ MOVESPEED = 6
 pickUpSound = pygame.mixer.Sound('pickup.wav')
 pygame.mixer.music.load('background.mid')
 pygame.mixer.music.play(-1, 0.0)
+musicPlaying = True
 
 # Run the game loop.
 while True:
@@ -76,6 +77,12 @@ while True:
             if event.key == K_x:
                 player.top = random.randint(0, WINDOWHEIGHT - player.height)
                 player.left = random.randint(0, WINDOWWIDTH - player.width)
+            if event.key == K_m:
+                if musicPlaying:
+                    pygame.mixer.music.stop()
+                else:
+                    pygame.mixer.music.play(-1, 0, 0)
+                musicPlaying = not musicPlaying
 
         if event.type == MOUSEBUTTONUP:
             foods.append(pygame.Rect(event.pos[0], event.pos[1], FOODSIZE, FOODSIZE))
