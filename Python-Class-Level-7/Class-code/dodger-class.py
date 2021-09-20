@@ -17,6 +17,12 @@ def terminate():
     pygame.quit()
     sys.exit()
 
+def playerHasHitBaddie(playerRect, baddies):
+    for b in baddies:
+        if playerRect.colliderect(b['rect']):
+            return True
+    return False
+
 pygame.init()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -72,15 +78,21 @@ while True:
                 if event.key == K_DOWN or event.key == K_s:
                     moveDown = False
 
+            if event.type == MOUSEMOTION:
+                playerRect.centerx = event.pos[0]
+                playerRect.centery = event.pos[1]
+
         baddieAddCounter += 1
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
             baddieSize = random.randint(BADDIEMINSIZE, BADDIEMAXSIZE)
             newBaddie = {'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize, baddieSize),
-                         'speed': 
-
+                         'speed': 1,
+                         'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
             }
 
+            baddies.append(newBaddie)
+        
 
         if moveLeft and playerRect.left > 0:
             playerRect.move_ip(-1 * PLAYERMOVERATE, 0)
@@ -91,10 +103,15 @@ while True:
         if moveDown and playerRect.bottom < WINDOWHEIGHT:
             playerRect.move_ip(0, PLAYERMOVERATE)
             
+        for b in baddies:
+            b['rect'].move_ip(0, b['speed'])
 
         windowSurface.fill(BACKGROUNDCOLOR)
 
         windowSurface.blit(playerImage, playerRect)
+
+        for b in baddies:
+            windowSurface.blit(b['surface'], b['rect'])
 
         pygame.display.update()
 
