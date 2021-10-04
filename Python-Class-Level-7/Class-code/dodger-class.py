@@ -59,6 +59,7 @@ while True:
     baddies = []
     playerRect.topleft = (WINDOWWIDTH / 2, WINDOWHEIGHT - 50)
     moveLeft = moveRight = moveUp = moveDown = False
+    slowCheat = False
     baddieAddCounter = 0
     pygame.mixer.music.play(-1, 0.0)
 
@@ -68,6 +69,8 @@ while True:
                 terminate()
 
             if event.type == KEYDOWN:
+                if event.key == K_MINUS:
+                    slowCheat = True
                 if event.key == K_LEFT or event.key == K_a:
                     moveRight = False
                     moveLeft = True
@@ -82,6 +85,8 @@ while True:
                     moveDown = True
 
             if event.type == KEYUP:
+                if event.key == K_MINUS:
+                    slowCheat = False
                 if event.key == K_ESCAPE:
                     terminate()
                 
@@ -97,13 +102,13 @@ while True:
             if event.type == MOUSEMOTION:
                 playerRect.centerx = event.pos[0]
                 playerRect.centery = event.pos[1]
-
-        baddieAddCounter += 1
+        if not slowCheat:
+            baddieAddCounter += 1
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
             baddieSize = random.randint(BADDIEMINSIZE, BADDIEMAXSIZE)
             newBaddie = {'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize, baddieSize),
-                         'speed': 1,
+                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
                          'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
             }
 
@@ -120,7 +125,10 @@ while True:
             playerRect.move_ip(0, PLAYERMOVERATE)
             
         for b in baddies:
-            b['rect'].move_ip(0, b['speed'])
+            if not slowCheat:
+                b['rect'].move_ip(0, b['speed'])
+            elif slowCheat:
+                b['rect'].move_ip(0, 1)
 
         for b in baddies[:]:
             if b['rect'].top > WINDOWHEIGHT:
