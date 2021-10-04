@@ -23,6 +23,22 @@ def playerHasHitBaddie(playerRect, baddies):
             return True
     return False
 
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 30, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+def waitForPlayerToPressKey():
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    terminate()
+                return
+
 pygame.init()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -106,6 +122,10 @@ while True:
         for b in baddies:
             b['rect'].move_ip(0, b['speed'])
 
+        for b in baddies[:]:
+            if b['rect'].top > WINDOWHEIGHT:
+                baddies.remove(b)
+
         windowSurface.fill(BACKGROUNDCOLOR)
 
         windowSurface.blit(playerImage, playerRect)
@@ -115,4 +135,14 @@ while True:
 
         pygame.display.update()
 
+        if playerHasHitBaddie(playerRect, baddies):
+            break
+
         mainClock.tick(FPS)
+
+    pygame.mixer.music.stop()
+    gameOverSound.play()
+
+    drawText('GAME OVER', font, windowSurface, 50, 50)
+    pygame.display.update()
+    waitForPlayerToPressKey()
