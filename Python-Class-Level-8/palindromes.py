@@ -2,7 +2,7 @@
 
 import load_dictionary
 
-word_list = load_dictionary.load('/Users/willyu/dev/Teaching-Python-Code/Python-Class-Level-8/2of4brif.txt')
+word_list = load_dictionary.load('/Users/willyu/dev/Teaching-Python-Code/Python-Class-Level-8/words.txt')
 
 pali_list = []
 
