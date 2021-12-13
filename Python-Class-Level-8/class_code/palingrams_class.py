@@ -14,3 +14,4 @@ def find_palingrams():
                 if word[:i] == rev_word[end-i:] and rev_word[:end-i] in word_list:
                     pali_list.append((rev_word[:end-i], word))
         return pali_list
+
