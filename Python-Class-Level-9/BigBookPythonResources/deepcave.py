@@ -39,10 +39,10 @@ while True:
 
     # Adjust the gap width:
     # (!) Try uncommenting out all of the following code:
-    # diceRoll = random.randint(1, 6)
-    # if diceRoll == 1 and gapWidth > 1:
-    #    gapWidth = gapWidth - 1  # Decrease gap width.
-    # elif diceRoll == 2 and leftWidth + gapWidth < WIDTH - 1:
-    #    gapWidth = gapWidth + 1  # Increase gap width.
-    # else:
-    #    pass  # Do nothing; no change in gap width.
+    diceRoll = random.randint(1, 6)
+    if diceRoll == 1 and gapWidth > 1:
+       gapWidth = gapWidth - 1  # Decrease gap width.
+    elif diceRoll == 2 and leftWidth + gapWidth < WIDTH - 1:
+       gapWidth = gapWidth + 1  # Increase gap width.
+    else:
+       pass  # Do nothing; no change in gap width.
