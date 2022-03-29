@@ -6,7 +6,7 @@ Tags: short, game, puzzle"""
 import copy
 import sys
 
-TOTAL_DISKS = 5  # More disks means a more difficult puzzle.
+TOTAL_DISKS = 3  # More disks means a more difficult puzzle.
 
 # Start with all disks on tower A:
 COMPLETE_TOWER = list(range(TOTAL_DISKS, 0, -1))
