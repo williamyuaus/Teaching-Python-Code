@@ -59,7 +59,7 @@ while True:
     baddies = []
     playerRect.topleft = (WINDOWWIDTH / 2, WINDOWHEIGHT - 50)
     moveLeft = moveRight = moveUp = moveDown = False
-    slowCheat = False
+    slowCheat = reverseCheat = False
     baddieAddCounter = 0
     pygame.mixer.music.play(-1, 0.0)
 
@@ -102,7 +102,7 @@ while True:
             if event.type == MOUSEMOTION:
                 playerRect.centerx = event.pos[0]
                 playerRect.centery = event.pos[1]
-        if not slowCheat:
+        if not slowCheat and not reverseCheat:
             baddieAddCounter += 1
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
@@ -125,8 +125,10 @@ while True:
             playerRect.move_ip(0, PLAYERMOVERATE)
             
         for b in baddies:
-            if not slowCheat:
+            if not reverseCheat and not slowCheat:
                 b['rect'].move_ip(0, b['speed'])
+            elif reverseCheat:
+                b['rect'].move_ip(0, -5)
             elif slowCheat:
                 b['rect'].move_ip(0, 1)
 

@@ -1,13 +1,9 @@
-"""Water Bucket Puzzle, by Al Sweigart al@inventwithpython.com
-A water pouring puzzle.
-More info: https://en.wikipedia.org/wiki/Water_pouring_puzzle
-This code is available at https://nostarch.com/big-book-small-python-programming
-Tags: large, game, math, puzzle"""
+
 
 import sys
 
 
-print('Water Bucket Puzzle, by Al Sweigart al@inventwithpython.com')
+# print('Water Bucket Puzzle, by Al Sweigart al@inventwithpython.com')
 
 GOAL = 4  # The exact amount of water to have in a bucket to win.
 steps = 0  # Keep track of how many steps the player made to solve this.
