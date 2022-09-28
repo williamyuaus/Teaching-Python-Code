@@ -9,6 +9,7 @@ Author:
 import sys
 import random
 import pygame
+from sprites.dinosaur import Dinosaur
 
 
 

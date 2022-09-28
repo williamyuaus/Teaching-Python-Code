@@ -2,6 +2,105 @@ import os
 import pygame
 import random
 import sys
+import cfg
+
+WINDOWWIDTH = 640
+WINDOWHEIGHT = 640
+TEXTCOLOR = (0, 0, 0)
+BACKGROUNDCOLOR = (255, 255, 255)
+FPS = 60
+
+'''滑雪者类'''
+class SkierSprite(pygame.sprite.Sprite):
+    def __init__(self, images):
+        pygame.sprite.Sprite.__init__(self)
+        # 滑雪者的朝向(-2到2)
+        self.direction = 0
+        self.image_fall = images[-1]
+        self.images = images[:-1]
+        self.image = self.images[self.direction]
+        self.rect = self.image.get_rect()
+        self.rect.center = [320, 100]
+        self.speed = [self.direction, 6 - abs(self.direction) * 2]
+    '''改变滑雪者的朝向. 负数为向左，正数为向右，0为向前'''
+    def turn(self, num):
+        self.direction += num
+        self.direction = max(-2, self.direction)
+        self.direction = min(2, self.direction)
+        center = self.rect.center
+        self.image = self.images[self.direction]
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+        self.speed = [self.direction, 6-abs(self.direction)*2]
+        return self.speed
+    '''移动滑雪者'''
+    def move(self):
+        self.rect.centerx += self.speed[0]
+        self.rect.centerx = max(20, self.rect.centerx)
+        self.rect.centerx = min(620, self.rect.centerx)
+    '''设置为摔倒状态'''
+    def setFall(self):
+        self.image = self.image_fall
+    '''设置为站立状态'''
+    def setForward(self):
+        self.direction = 0
+        self.image = self.images[self.direction]
+
+
+'''障碍物类'''
+class ObstacleSprite(pygame.sprite.Sprite):
+    def __init__(self, image, location, attribute):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image
+        self.location = location
+        self.rect = self.image.get_rect()
+        self.rect.center = self.location
+        self.attribute = attribute
+        self.passed = False
+    '''移动'''
+    def move(self, num):
+        self.rect.centery = self.location[1] - num
+
+
+'''main'''
+def main():
+    # Set up pygame.
+    pygame.init()
+    mainClock = pygame.time.Clock()
+
+    # Set up the window.
+    screen = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)
+    pygame.display.set_caption('Ski Game')
+    pygame.mouse.set_visible(False)
+
+    # Set up the fonts.
+    font = pygame.font.SysFont(None, 48)
+
+    # Set up sounds.
+    pygame.mixer.init()
+    pygame.mixer.music.load('resources/audios/bgm.mp3')    
+
+    # Set up the colors.
+    BLACK = (0, 0, 0)
+    GREEN = (0, 255, 0)
+    WHITE = (255, 255, 255)
+
+    # Draw the white background onto the surface.
+    screen.fill(BACKGROUNDCOLOR)
+
+    # Show the "Start" screen.
+    drawText('Ski Game', font, screen, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+    drawText('Press a key to start.', font, screen, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
+    waitForPlayerToPressKey()
+
+    # Run the game loop.
+    while True:
+        # Check for events.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 
 '''配置类'''
 class Config():
@@ -55,10 +154,43 @@ def ShowStartInterface(self, screen):
                     return
             pygame.display.update()
 
-pygame.init()
-clock = pygame.time.Clock()
-# windowSurface = pygame.display.set_mode((Config.SCREENSIZE))
-pygame.display.set_caption(Config.TITLE)
-pygame.mouse.set_visible(False)
-screen = pygame.display.set_mode(Config.SCREENSIZE)
-ShowStartInterface(screen)
+'''游戏开始界面'''
+def GameStartInterface(screen, sounds, cfg):
+    # dino = Dinosaur(cfg.IMAGE_PATHS['dino'])
+    # ground = pygame.image.load(cfg.IMAGE_PATHS['ground']).subsurface((0, 0), (83, 19))
+    # rect = ground.get_rect()
+    # rect.left, rect.bottom = cfg.SCREENSIZE[0]/20, cfg.SCREENSIZE[1]
+    screen.fill((255, 255, 255))
+    clock = pygame.time.Clock()
+    press_flag = False
+    while True:
+        pygame.display.update()
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+def waitForPlayerToPressKey():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: # Pressing ESC quits.
+                    terminate()
+                return
+        pygame.display.update()
+
+'''run'''
+if __name__ == '__main__':
+    highest_score = 0
+    flag = True
+    while True:
+        main()
+        if not flag: break
