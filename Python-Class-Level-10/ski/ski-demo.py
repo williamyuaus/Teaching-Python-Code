@@ -12,17 +12,23 @@ FPS = 60
 
 '''滑雪者类'''
 class SkierSprite(pygame.sprite.Sprite):
-    def __init__(self, images):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         # 滑雪者的朝向(-2到2)
         self.direction = 0
-        self.image_fall = images[-1]
-        self.images = images[:-1]
+        rootdir = os.path.split(os.path.abspath(__file__))[0]
+        self.images = [os.path.join(rootdir, 'resources/images/skier_forward.png'),
+                os.path.join(rootdir, 'resources/images/skier_right1.png'),
+                os.path.join(rootdir, 'resources/images/skier_right2.png'),
+                os.path.join(rootdir, 'resources/images/skier_left2.png'),
+                os.path.join(rootdir, 'resources/images/skier_left1.png'),
+                os.path.join(rootdir, 'resources/images/skier_fall.png')]
+        self.person = pygame.image.load(self.images[self.direction])
         self.image = self.images[self.direction]
-        self.rect = self.image.get_rect()
+        self.rect = self.person.get_rect()
         self.rect.center = [320, 100]
         self.speed = [self.direction, 6 - abs(self.direction) * 2]
-    '''改变滑雪者的朝向. 负数为向左，正数为向右，0为向前'''
+    '''改变滑雪者的朝向. 负数为向左,正数为向右,0为向前'''
     def turn(self, num):
         self.direction += num
         self.direction = max(-2, self.direction)
@@ -66,7 +72,6 @@ class ObstacleSprite(pygame.sprite.Sprite):
 def main():
     # Set up pygame.
     pygame.init()
-    mainClock = pygame.time.Clock()
 
     # Set up the window.
     screen = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)
@@ -76,9 +81,29 @@ def main():
     # Set up the fonts.
     font = pygame.font.SysFont(None, 48)
 
-    # Set up sounds.
-    pygame.mixer.init()
-    pygame.mixer.music.load('resources/audios/bgm.mp3')    
+    # 根目录
+    rootdir = os.path.split(os.path.abspath(__file__))[0]
+
+    # 游戏图片路径
+    IMAGE_PATHS_DICT = {
+        'skier': [
+            os.path.join(rootdir, 'resources/images/skier_forward.png'),
+            os.path.join(rootdir, 'resources/images/skier_right1.png'),
+            os.path.join(rootdir, 'resources/images/skier_right2.png'),
+            os.path.join(rootdir, 'resources/images/skier_left2.png'),
+            os.path.join(rootdir, 'resources/images/skier_left1.png'),
+            os.path.join(rootdir, 'resources/images/skier_fall.png')
+        ],
+        'tree': os.path.join(rootdir, 'resources/images/tree.png'),
+        'flag': os.path.join(rootdir, 'resources/images/flag.png'),
+    }
+
+    # 背景音乐路径
+    BGM_PATH = os.path.join(rootdir, 'resources/audios/bgm.mp3')
+
+    # # Set up sounds.
+    # pygame.mixer.init()
+    # pygame.mixer.music.load('resources/audios/bgm.mp3')    
 
     # Set up the colors.
     BLACK = (0, 0, 0)
@@ -93,6 +118,19 @@ def main():
     drawText('Press a key to start.', font, screen, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
     waitForPlayerToPressKey()
 
+    # 实例化游戏精灵
+    # --滑雪者
+    skier = SkierSprite()
+
+    # 游戏clock
+    clock = pygame.time.Clock()
+    # 记录滑雪的距离
+    distance = 0
+    # 记录当前的分数
+    score = 0
+    # 记录当前的速度
+    speed = [0, 6]
+
     # Run the game loop.
     while True:
         # Check for events.
@@ -100,6 +138,22 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    speed = skier.turn(-1)
+                elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    speed = skier.turn(1)
+         # --更新当前游戏帧的数据
+            skier.move()
+            distance += speed[1]
+        
+        # --更新屏幕
+        # self.updateFrame(screen, obstacles, skier, score)
+        # clock.tick(cfg.FPS)
+        screen.fill(BACKGROUNDCOLOR)
+        screen.blit(skier.image[0], skier.rect)
+        pygame.display.update()
+
 
 
 '''配置类'''
